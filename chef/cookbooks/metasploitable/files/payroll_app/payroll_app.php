@@ -1,6 +1,15 @@
 <?php
 
-$conn = new mysqli('127.0.0.1', 'root', 'sploitme', 'payroll');
+$dbHost = getenv('DB_HOST') ?: '127.0.0.1';
+$dbUser = getenv('DB_USER') ?: 'root';
+$dbPass = getenv('DB_PASSWORD');
+$dbName = getenv('DB_NAME') ?: 'payroll';
+
+if ($dbPass === false) {
+    die('Database configuration error.');
+}
+
+$conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
